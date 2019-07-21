@@ -14,6 +14,9 @@ public class Signup_page {
     @FindBy(xpath="//input[@id='companyName']")
     WebElement companyname;
 
+    @FindBy(xpath="")
+    WebElement remember;
+    
     @FindBy(xpath="//input[@id='userPassword']")
     WebElement password;
 
