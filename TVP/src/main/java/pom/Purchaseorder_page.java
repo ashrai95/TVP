@@ -1,9 +1,14 @@
 package pom;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Test;
 
-public class Purchaseorder_page {
+public class Purchaseorder_page extends Login_page{
 
 	@FindBy(xpath="//a[contains(.,'Purchase Order')]")
 	WebElement purchaseorderbutton;
@@ -31,4 +36,22 @@ public class Purchaseorder_page {
 
 	@FindBy(xpath="")
 	WebElement posearch;
+	
+	@Test
+	public void searchproduct()
+	{
+		PageFactory.initElements(driver, this);
+		purchaseorderbutton.click();
+		createorder.click();
+		Set<String> popup = driver.getWindowHandles();
+		Iterator<String> iterator = popup.iterator();
+		String newwindow=null;
+		while(iterator.hasNext())
+		{
+		newwindow=iterator.next();
+		}
+		driver.switchTo().window(newwindow);
+		productsearch.sendKeys("prod");
+		
+	}
 }
