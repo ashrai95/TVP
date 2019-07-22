@@ -18,10 +18,13 @@ public class Baseclass {
 //	But you can add it to safari manually and after that use System.setProperty("webdriver.safari.noinstall", "true"); property to stop uninstall it.
 //	And you can also try to prepare safari using COM object or window process and add extension using some desktop automation.
 	
-	public WebDriver launchdriver()
-	{
-		WebDriverManager.chromedriver().setup();
-		WebDriver driver = new ChromeDriver();
-		return driver;
+	public static WebDriver driver;
+	
+	public static WebDriver driver() {
+	WebDriverManager.chromedriver().setup();
+	 driver = new ChromeDriver();
+	 driver.manage().window().maximize();
+	 driver.get("https://qa-tvp.kiwireader.com");
+	   return driver;
 	}
 }
