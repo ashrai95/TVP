@@ -1,24 +1,23 @@
 package pom;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import tests.Baseclass;
 
-public class Login_page {
+public class Login_page extends Baseclass {
 	
 				
-	@FindBy(xpath="//input[@id='userEmail'")
+	@FindBy(xpath="//input[@id='userEmail']")
 	WebElement email;
 	
 	@FindBy(xpath="//input[@id='userPassword']")
 	WebElement password;
 	
-	@FindBy(xpath="//input[@type='checkbox']")
+	@FindBy(xpath="//div[@class='checkbox-wrapper remember-me']")
 	WebElement remember;
 		
 	@FindBy(xpath="//a[@class='forgot-link']")
@@ -39,17 +38,15 @@ public class Login_page {
 	@FindBy(xpath="//a[text()='Privacy Policy']")
 	WebElement privacypolicy;
 	
+	
 	@Test
 	public void login()
 	{
-		WebDriverManager.chromedriver().setup();
-		WebDriver driver= new ChromeDriver();
-		driver.get("https://qa-tvp.kiwireader.com/");
-		driver.manage().window().maximize();
-		JavascriptExecutor js = (JavascriptExecutor) driver;  
-		js.executeScript("arguments[0].click();",remember);
-		
-		driver.quit();
+      PageFactory.initElements(driver, this);
+	  email.sendKeys("vini@yopmail.com");
+	  password.sendKeys("Passw0rd#");
+	  remember.click();
+	  loginbutton.click();
 	}
 	
     

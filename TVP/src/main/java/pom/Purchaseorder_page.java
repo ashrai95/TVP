@@ -1,11 +1,16 @@
 package pom;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 public class Purchaseorder_page extends Login_page{
@@ -25,10 +30,10 @@ public class Purchaseorder_page extends Login_page{
 	@FindBy(xpath="//input[@class='prdSearch']")
 	WebElement productsearch;
 	
-	@FindBy(xpath="")
-	WebElement checkbox;
+	@FindBy(xpath="//div[@class='stock-checkbox']")
+	List<WebElement> checkbox;
 
-	@FindBy(xpath="//div[@class='add-modal-footer text-right']/preceding::button[text()='Done']")
+	@FindBy(xpath="//button[@id='prd-btn-select' and text()='Done']")
 	WebElement done;
 
 	@FindBy(xpath="")
@@ -38,11 +43,15 @@ public class Purchaseorder_page extends Login_page{
 	WebElement posearch;
 	
 	@Test
-	public void searchproduct()
+	public void searchproduct() throws InterruptedException
 	{
 		PageFactory.initElements(driver, this);
 		purchaseorderbutton.click();
 		createorder.click();
+		
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(productsearch));
+		
 		Set<String> popup = driver.getWindowHandles();
 		Iterator<String> iterator = popup.iterator();
 		String newwindow=null;
@@ -51,7 +60,16 @@ public class Purchaseorder_page extends Login_page{
 		newwindow=iterator.next();
 		}
 		driver.switchTo().window(newwindow);
-		productsearch.sendKeys("prod");
 		
+		productsearch.sendKeys("prod");
+		Thread.sleep(2000);
+		
+		System.out.println(checkbox.size());
+		//Iterator<WebElement> listelement=checkbox.iterator();
+		 
+             driver.findElement(By.xpath("//span[contains(text(),'new')]")).click();
+        
+          
+		 done.click();
 	}
 }
