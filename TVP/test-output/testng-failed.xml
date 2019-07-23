@@ -5,9 +5,8 @@
     <classes>
       <class name="pom.Purchaseorder_page">
         <methods>
-          <include name="login"/>
-          <include name="launchdriver"/>
           <include name="closeBrowser"/>
+          <include name="launchdriver"/>
           <include name="searchproduct"/>
         </methods>
       </class> <!-- pom.Purchaseorder_page -->

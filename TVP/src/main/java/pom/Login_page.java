@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
-import tests.Baseclass;
+import utility.Baseclass;
 
 public class Login_page extends Baseclass {
 	
