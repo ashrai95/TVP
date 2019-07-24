@@ -5,6 +5,7 @@
     <classes>
       <class name="pom.Purchaseorder_page">
         <methods>
+          <include name="login"/>
           <include name="closeBrowser"/>
           <include name="launchdriver"/>
           <include name="searchproduct"/>

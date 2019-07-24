@@ -32,7 +32,7 @@ public class Baseclass {
 	     return driver;
 	}
 	
-	@AfterClass
+	//@AfterClass
 	public static void closeBrowser()
 	{
 		driver.quit();
