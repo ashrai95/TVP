@@ -67,9 +67,9 @@ public class Purchaseorder_page extends Login_page{
 		System.out.println(checkbox.size());
 		//Iterator<WebElement> listelement=checkbox.iterator();
 		 
-             driver.findElement(By.xpath("//span[contains(text(),'new')]")).click();
+             //driver.findElement(By.xpath("//span[contains(text(),'new')]")).click();
         
-          
+          checkbox.get(0).click();
 		 done.click();
 	}
 }
