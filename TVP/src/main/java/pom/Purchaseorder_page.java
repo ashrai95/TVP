@@ -118,11 +118,15 @@ public class Purchaseorder_page extends Login_page{
 		Thread.sleep(2000);
 		
 		System.out.println(checkbox.size());
-		//Iterator<WebElement> listelement=checkbox.iterator();
 		 
-             //driver.findElement(By.xpath("//span[contains(text(),'new')]")).click();
-        
-          checkbox.get(0).click();
+         checkbox.get(0).click();
 		 done.click();
+		 for(int i=0; i<quantity.size(); i++)
+		 {
+			 quantity.get(i).sendKeys("10");
+		 }
+		 scrolltoview(driver, next);
+		 productiontime.get(0).click();
+		 next.click();
 	}
 }

@@ -1,6 +1,8 @@
 package utility;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -38,5 +40,18 @@ public class Baseclass {
 		driver.quit();
 	}
 	
-	
+	public static boolean scrolltoview(WebDriver driver,WebElement element)
+	{
+		try
+		{
+			String scrollelementintomiddle = "var viewportheight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);" + "var elementtop = arguments[0].getBoundingClientRect().top;" + "window.scrollBy(0,elementtop-(viewportheight/2));";
+            ((JavascriptExecutor)driver).executeScript(scrollelementintomiddle, element);
+            return true;
+		}
+		catch (Exception e)
+		{
+		System.out.println("Exception in baseclass"+ e);
+		return false;
+		}
+	}
 }
