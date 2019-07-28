@@ -3,9 +3,11 @@ package pom;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.SubmissionPublisher;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -46,7 +48,7 @@ public class Purchaseorder_page extends Login_page{
 	
 	//Order creation page - Order quantity page
 	
-	@FindBy(xpath="placeholder='Add QTY'")
+	@FindBy(xpath="//input[@class='number required_size']")
 	List<WebElement> quantity;
 	
 	@FindBy(xpath="//div[@id='order_total_quantity']")
@@ -55,11 +57,14 @@ public class Purchaseorder_page extends Login_page{
 	@FindBy(xpath="//a[@id='choose-products-btn']")
 	WebElement addmoreproducts;
 
-	@FindBy(xpath="//div[@class='summary-div']")
+	@FindBy(xpath="//div[@class='production-summary-panel card_click']//following-sibling::label")
 	List<WebElement> productiontime;
 
 	@FindBy(xpath="//textarea[@name='data[order][clientNote]']")
 	WebElement clientnotes;
+	
+	@FindBy(xpath="//div[@class='production-panel-head']")
+	WebElement ptime;
 
 	@FindBy(xpath="//span[@id='selling_total_price_foot']")
 	WebElement totalpricefooter;
@@ -76,9 +81,12 @@ public class Purchaseorder_page extends Login_page{
 	@FindBy(xpath="//button[text()='Next']")
 	WebElement next;
 	
-	//Order creation page - Order quantity page
+	//Order creation page - Order finishing page
 	@FindBy(xpath="//div[@class='input-field select-finishing-div mainclassOfFinishingOrder']")
-	WebElement finishingtype;
+	WebElement finishing;
+	
+	@FindBy(xpath="//input[@class='select-dropdown dropdown-trigger']/following::li")
+	List<WebElement> finishingtype;
 	
 	@FindBy(xpath="//textarea[@name='data[OrderFinishingTag][1][note]']")
 	WebElement orderfinishingnotes;
@@ -93,8 +101,21 @@ public class Purchaseorder_page extends Login_page{
 	@FindBy(xpath="//div[@class='col s6 card ship-box-div card_click']")
 	List<WebElement> shippingaddress;
 	
-	//@FindBy(xpath="")
-	//WebElement ;
+	@FindBy(xpath="//div[@class='shipping-address-done-buttons']/button")
+	WebElement shippingdone;
+	
+	@FindBy(xpath="//input[@class='number required_ship_size changeInput shipment_quantity']")
+	List<WebElement> shippingquantity;
+	
+	@FindBy(xpath="//div[@class='input-field custom-input select-wrappers']//input[@class='select-dropdown dropdown-trigger']")
+	WebElement shippingdropdown;
+	
+	@FindBy(xpath="//input[@class='select-dropdown dropdown-trigger']/following::li[@id]")
+	List<WebElement> shippingmethod;
+	
+	@FindBy(xpath="//button[text()='Submit']")
+	WebElement submit;
+	
 	@Test
 	public void searchproduct() throws InterruptedException
 	{
@@ -103,7 +124,7 @@ public class Purchaseorder_page extends Login_page{
 		createorder.click();
 		
 		WebDriverWait wait = new WebDriverWait(driver, 30);
-		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(productsearch));
+		wait.until(ExpectedConditions.elementToBeClickable(productsearch));
 		
 		Set<String> popup = driver.getWindowHandles();
 		Iterator<String> iterator = popup.iterator();
@@ -117,7 +138,7 @@ public class Purchaseorder_page extends Login_page{
 		productsearch.sendKeys("prod");
 		Thread.sleep(2000);
 		
-		System.out.println(checkbox.size());
+		//System.out.println(checkbox.size());
 		 
          checkbox.get(0).click();
 		 done.click();
@@ -125,8 +146,54 @@ public class Purchaseorder_page extends Login_page{
 		 {
 			 quantity.get(i).sendKeys("10");
 		 }
-		 scrolltoview(driver, next);
+		 scrolltoview(driver, ptime);
 		 productiontime.get(0).click();
 		 next.click();
+		 
+		 //Order finishing
+		/* scrolltoview(driver, addadditionalfinishing);
+		 if(finishing.isDisplayed()==true)
+		 {
+		 finishing.click();
+		 finishingtype.get(0).click();
+		 }
+		 */
+		 wait.until(ExpectedConditions.elementToBeClickable(finishing));
+		 finishing.click();
+		 finishingtype.get(1).click();
+		
+		// Thread.sleep(500);
+		 next.click();
+		 
+		 //Shipping address choose
+		 wait.until(ExpectedConditions.elementToBeClickable(chooseshipping));
+		 chooseshipping.click();
+		 Set<String> popupaddress = driver.getWindowHandles();
+			Iterator<String> iteratoraddress = popupaddress.iterator();
+			String newwindowaddress=null;
+			while(iteratoraddress.hasNext())
+			{
+			newwindowaddress=iteratoraddress.next();
+			}
+			driver.switchTo().window(newwindowaddress);
+			Thread.sleep(500);
+			shippingaddress.get(0).click();
+			shippingdone.click();
+		    
+			wait.until(ExpectedConditions.elementToBeClickable(shippingdropdown));
+			for(int j=0; j<shippingquantity.size(); j++)
+			 {
+				 shippingquantity.get(j).sendKeys("10");
+			 }
+			
+			scrolltoview(driver, shippingdropdown);
+			 shippingdropdown.click();
+			 shippingmethod.get(2).click();
+			wait.until(ExpectedConditions.elementToBeClickable(next)).click();;	 
+			Actions action=new Actions(driver);
+			action.moveToElement(next).build().perform();
+			submit.click();
+			
+		 
 	}
 }
