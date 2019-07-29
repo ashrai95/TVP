@@ -3,12 +3,10 @@ package pom;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.SubmissionPublisher;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -124,7 +122,7 @@ public class Purchaseorder_page extends Login_page{
 		createorder.click();
 		
 		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.elementToBeClickable(productsearch));
+		//wait.until(ExpectedConditions.elementToBeClickable(productsearch));
 		
 		Set<String> popup = driver.getWindowHandles();
 		Iterator<String> iterator = popup.iterator();
@@ -158,7 +156,7 @@ public class Purchaseorder_page extends Login_page{
 		 finishingtype.get(0).click();
 		 }
 		 */
-		 wait.until(ExpectedConditions.elementToBeClickable(finishing));
+		 //wait.until(ExpectedConditions.elementToBeClickable(finishing));
 		 finishing.click();
 		 finishingtype.get(1).click();
 		
@@ -166,7 +164,7 @@ public class Purchaseorder_page extends Login_page{
 		 next.click();
 		 
 		 //Shipping address choose
-		 wait.until(ExpectedConditions.elementToBeClickable(chooseshipping));
+		 //wait.until(ExpectedConditions.visibilityOf(chooseshipping));
 		 chooseshipping.click();
 		 Set<String> popupaddress = driver.getWindowHandles();
 			Iterator<String> iteratoraddress = popupaddress.iterator();
@@ -180,7 +178,7 @@ public class Purchaseorder_page extends Login_page{
 			shippingaddress.get(0).click();
 			shippingdone.click();
 		    
-			wait.until(ExpectedConditions.elementToBeClickable(shippingdropdown));
+			//wait.until(ExpectedConditions.elementToBeClickable(shippingdropdown));
 			for(int j=0; j<shippingquantity.size(); j++)
 			 {
 				 shippingquantity.get(j).sendKeys("10");
@@ -189,11 +187,14 @@ public class Purchaseorder_page extends Login_page{
 			scrolltoview(driver, shippingdropdown);
 			 shippingdropdown.click();
 			 shippingmethod.get(2).click();
-			wait.until(ExpectedConditions.elementToBeClickable(next)).click();;	 
-			Actions action=new Actions(driver);
-			action.moveToElement(next).build().perform();
+			 //Thread.sleep(1000);
+			//wait.until(ExpectedConditions.elementToBeClickable(next)).click();
+			
+			next.click();
+			//wait.until(ExpectedConditions.elementToBeClickable(submit)).click();
 			submit.click();
 			
 		 
 	}
+	
 }
