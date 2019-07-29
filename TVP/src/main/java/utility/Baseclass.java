@@ -4,7 +4,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.BeforeClass;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -22,13 +22,19 @@ public class Baseclass {
 //	But you can add it to safari manually and after that use System.setProperty("webdriver.safari.noinstall", "true"); property to stop uninstall it.
 //	And you can also try to prepare safari using COM object or window process and add extension using some desktop automation.
 	
-	public static WebDriver driver;
+	public static WebDriver driver1;
+	public static EventFiringWebDriver driver;
 	
 	@BeforeClass
 	public static WebDriver launchdriver() {
 		
     	 WebDriverManager.chromedriver().setup();
-    	 driver = new ChromeDriver();
+    	 driver1 = new ChromeDriver();
+    	 
+    	 driver = new EventFiringWebDriver(driver1);
+    	 WebDriverListerners eventListener = new WebDriverListerners();
+    	 driver.register(eventListener);
+    	 
 	     driver.manage().window().maximize();
 	     driver.get("https://qa-tvp.kiwireader.com");
 	     return driver;
