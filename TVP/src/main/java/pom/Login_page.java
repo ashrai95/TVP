@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import utility.Baseclass;
@@ -39,12 +41,12 @@ public class Login_page extends Baseclass {
 	WebElement privacypolicy;
 	
 	
-	@Test
+	@BeforeClass
 	public void login()
 	{
       PageFactory.initElements(driver, this);
-	  email.sendKeys("vini@yopmail.com");
-	  password.sendKeys("Passw0rd#");
+	  email.sendKeys("ashish.rai@kiwitech.com");//pre-vinisha.rai@kiwitech.com//vini@yopmail.com
+	  password.sendKeys("Passw0rd#");//
 	  remember.click();
 	  loginbutton.click();
 	}
